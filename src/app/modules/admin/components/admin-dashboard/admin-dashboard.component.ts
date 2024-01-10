@@ -7,6 +7,7 @@ import { AdminService } from '../../services/admin.service';
   styleUrl: './admin-dashboard.component.css'
 })
 export class AdminDashboardComponent {
+  cars: any;
   constructor(private adminService:AdminService){}
 
   ngOnInit(){
@@ -16,6 +17,10 @@ export class AdminDashboardComponent {
   getAllCars(){
     this.adminService.getAllCars().subscribe((res)=>{
       console.log(res);
+      res.forEach((element: { processedImg: string; returnedImage: string; }) =>{
+        element.processedImg = 'data:image/jpeg;base64' + element.returnedImage;
+        this.cars.push(element);
+      })
     })
   }
 }
